@@ -1,0 +1,137 @@
+DROP_PRODUCT:
+  code: "DROP_PRODUCT"
+  name: "Drop / Throw Product"
+  severity: "HIGH"
+  description: "Product drops rapidly or is thrown instead of being placed gently onto the staging surface or pallet."
+  conditions:
+    previously_supported: true
+    operator_separation: true
+    high_vertical_velocity: true
+    sudden_stop: true
+    floor_contact: true
+  evidence_templates:
+    - "Operator-product separation detected"
+    - "Rapid downward vertical acceleration (>{vertical_velocity} px/s)"
+    - "Sudden velocity arrest on ground contact"
+    - "Subsequent stationary state post-impact"
+  recommendation: "Inspect carton integrity immediately for internal/external damage and review gentle placement SOP with operator."
+
+DRAG_PRODUCT:
+  code: "DRAG_PRODUCT"
+  name: "Dragging Product"
+  severity: "MEDIUM"
+  description: "Carton or package dragged across the warehouse floor rather than lifted or transported with material handling equipment."
+  conditions:
+    near_floor: true
+    horizontal_motion: true
+    duration_seconds: ">1.0"
+    equipment_present: false
+  evidence_templates:
+    - "Continuous floor contact maintained"
+    - "Sustained lateral displacement ({duration_s}s) without mechanical lifter"
+    - "Absence of trolley or pallet jack support"
+  recommendation: "Halt manual dragging; deploy hand pallet truck or trolley to prevent friction damage to package base."
+
+ROUGH_HANDLING:
+  code: "ROUGH_HANDLING"
+  name: "Rough Handling / Excessive Impact"
+  severity: "HIGH"
+  description: "Product subjected to aggressive manual velocity change, violent shoving, or forceful impact against fixtures or pallets."
+  conditions:
+    impact_deceleration_high: true
+    sudden_direction_change: true
+  evidence_templates:
+    - "Abrupt lateral deceleration ({jerk_val} px/s²)"
+    - "High kinetic energy transfer on surface contact"
+  recommendation: "Inspect packaging corners for crushing and verify staging alignment."
+
+STACK_ORDER:
+  code: "STACK_ORDER"
+  name: "Incorrect Stack Order"
+  severity: "MEDIUM"
+  description: "Heavier or larger cartons stacked on top of smaller or lighter packages, causing crushing risk."
+  conditions:
+    top_box_larger_than_bottom: true
+    vertical_overlap_high: true
+  evidence_templates:
+    - "Top unit footprint exceeds supporting base unit by >20%"
+    - "Sub-optimal mass distribution detected in vertical stack"
+  recommendation: "Restack with heavier, larger base cartons at the bottom and lighter items on top."
+
+UNSTABLE_STACK:
+  code: "UNSTABLE_STACK"
+  name: "Unstable / Unsupported Stack"
+  severity: "HIGH"
+  description: "Stack column with severe vertical lean, excessive tilt angle, or precarious center of gravity."
+  conditions:
+    tilt_angle_degrees: ">12.0"
+    stack_height_units: ">=3"
+  evidence_templates:
+    - "Stack column lean angle measured at {tilt_angle}° (exceeds 12° limit)"
+    - "Center of gravity overhangs base perimeter"
+  recommendation: "Immediately stabilize or de-stack the precarious column before column collapse occurs."
+
+IMPROPER_STAGING:
+  code: "IMPROPER_STAGING"
+  name: "Product Outside Designated Staging Zone"
+  severity: "MEDIUM"
+  description: "Product or pallet placed in unauthorized walkway, fire lane, or outside assigned staging boundary."
+  conditions:
+    outside_designated_polygon: true
+    in_aisle_or_walkway: true
+  evidence_templates:
+    - "Product coordinates lie outside designated Staging Zone boundary"
+    - "Obstruction detected in active transit corridor or walkway"
+  recommendation: "Relocate item to designated staging bay to maintain clear transit pathways."
+
+PALLET_OVERHANG:
+  code: "PALLET_OVERHANG"
+  name: "Pallet Overhang / Inadequate Support"
+  severity: "HIGH"
+  description: "Carton or load protrudes beyond pallet edges, leading to edge crushing and transit puncture risks."
+  conditions:
+    support_ratio: "<0.90"
+  evidence_templates:
+    - "Support ratio calculated at {support_ratio}% (configured threshold: 90%)"
+    - "Carton base protrudes beyond pallet perimeter boundary"
+  recommendation: "Reposition load flush with pallet deck to ensure full base support during forklift transport."
+
+WRONG_ORIENTATION:
+  code: "WRONG_ORIENTATION"
+  name: "Wrong Product Orientation"
+  severity: "LOW"
+  description: "Product stacked vertically or on its side violating directional 'This Side Up' handling requirements."
+  conditions:
+    aspect_ratio_inverted: true
+    orientation_deviant: true
+  evidence_templates:
+    - "Aspect ratio inversion indicates vertical orientation for horizontal goods"
+    - "Deviation from standard palletized footprint orientation"
+  recommendation: "Orient carton upright according to directional markings before pallet wrapping."
+
+UNSAFE_SEQUENCE:
+  code: "UNSAFE_SEQUENCE"
+  name: "Unsafe Loading Sequence"
+  severity: "HIGH"
+  description: "Attempting to stage or load outer or top layers before establishing stable foundational staging layers."
+  conditions:
+    perimeter_unsupported: true
+    premature_elevated_placement: true
+  evidence_templates:
+    - "Elevated placement attempted without foundational perimeter support"
+    - "Sequence inversion relative to loading checklist"
+  recommendation: "Follow standardized bottom-up, back-to-front loading sequence protocol."
+
+INCORRECT_EQUIPMENT:
+  code: "INCORRECT_EQUIPMENT"
+  name: "Incorrect Handling Equipment / Manual Handling"
+  severity: "MEDIUM"
+  description: "Bulky or heavyweight item (>30kg profile) handled by a single operator without mechanical lifting assistance."
+  conditions:
+    single_operator: true
+    large_volume_item: true
+    no_trolley: true
+  evidence_templates:
+    - "Single operator handling heavy/bulky carton footprint"
+    - "Mechanical assist equipment absent from handling zone"
+  recommendation: "Enforce team lifting or utilize hand truck/scissor lift for oversized goods."

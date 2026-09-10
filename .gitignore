@@ -1,0 +1,31 @@
+# Python environments and generated Python files
+backend/venv/
+backend/.venv/
+.venv/
+.ultralytics/
+backend/.ultralytics/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# JavaScript dependencies and builds
+frontend/node_modules/
+frontend/dist/
+
+# Local configuration and runtime artefacts
+.env
+.env.*
+!.env.example
+backend/*.db
+backend/storage/uploads/
+backend/storage/processed/
+backend/storage/clips/
+backend/storage/thumbnails/
+backend/storage/reports/
+
+# Editor and OS files
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db

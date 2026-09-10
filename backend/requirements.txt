@@ -1,0 +1,17 @@
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pydantic>=2.6.0
+python-dotenv>=1.0.1
+sqlalchemy>=2.0.0
+pyyaml>=6.0.1
+opencv-python>=4.8.0
+ultralytics>=8.1.0
+# NumPy 2.x is required for current Python 3.13 wheels; the CargoIQ code uses
+# stable ndarray/OpenCV APIs compatible with NumPy 1.24+.
+numpy>=1.24.0
+httpx>=0.27.0
+python-multipart>=0.0.9
+websockets>=12.0
+imageio>=2.34.0
+imageio-ffmpeg>=0.4.9
+pytest>=8.0.0
