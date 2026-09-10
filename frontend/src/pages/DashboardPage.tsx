@@ -9,6 +9,7 @@ import { VideoPlayer } from '../components/video/VideoPlayer';
 import { useAnalyticsOverview } from '../api/analytics';
 import { useVideoAnalysisStatus, useVideoEvents, useVideos } from '../api/videos';
 import { useAppStore } from '../stores/useAppStore';
+import { WEBSOCKET_BASE } from '../api/client';
 import { FrameObservation, Incident, Video } from '../types';
 
 const mergeEvents = (persisted: Incident[], streamed: Incident[]) => {
@@ -41,8 +42,7 @@ export const DashboardPage: React.FC = () => {
 
   useEffect(() => {
     if (!activeVideo || !activeJob?.job_id || !isAnalyzing) return;
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const socket = new WebSocket(`${protocol}//${window.location.host}/ws/analysis/${activeJob.job_id}`);
+    const socket = new WebSocket(`${WEBSOCKET_BASE}/ws/analysis/${activeJob.job_id}`);
     socket.onmessage = (message) => {
       const data = JSON.parse(message.data);
       if (data.type === 'incident_detected' && data.incident?.video_id === activeVideo.id) {

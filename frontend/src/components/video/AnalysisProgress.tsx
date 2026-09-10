@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Activity, AlertTriangle, CheckCircle, Flame, Sparkles } from 'lucide-react';
 import { useAppStore } from '../../stores/useAppStore';
+import { WEBSOCKET_BASE } from '../../api/client';
 
 interface AnalysisProgressProps {
   jobId: string;
@@ -16,8 +17,7 @@ export const AnalysisProgress: React.FC<AnalysisProgressProps> = ({ jobId, onCom
   const { updateAnalysisProgress, setAnalysisState } = useAppStore();
 
   useEffect(() => {
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${protocol}//${window.location.host}/ws/analysis/${jobId}`;
+    const wsUrl = `${WEBSOCKET_BASE}/ws/analysis/${jobId}`;
     const ws = new WebSocket(wsUrl);
 
     ws.onopen = () => {

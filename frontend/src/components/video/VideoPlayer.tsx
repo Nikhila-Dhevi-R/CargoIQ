@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AlertOctagon, AlertTriangle, Info, Pause, Play, Radio, RotateCcw, ShieldAlert, Sparkles, Volume2, VolumeX } from 'lucide-react';
 import { FrameObservation, Incident, TrackedObjectSnapshot, Video } from '../../types';
 import { useAppStore } from '../../stores/useAppStore';
+import { BACKEND_BASE } from '../../api/client';
 
 interface VideoPlayerProps {
   video: Video;
@@ -54,8 +55,8 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ video, incidents, obse
   }, undefined);
   const visibleTracks = closestObservation?.tracks || activeIncident?.metadata?.tracks || [];
   const sourceUrl = showProcessed && video.processed_path
-    ? `/storage/processed/${video.processed_path.split(/[/\\]/).pop()}`
-    : `/storage/uploads/${video.filename}`;
+    ? `${BACKEND_BASE}/storage/processed/${video.processed_path.split(/[/\\]/).pop()}`
+    : `${BACKEND_BASE}/storage/uploads/${video.filename}`;
 
   useEffect(() => {
     setShowProcessed(Boolean(video.processed_path));
